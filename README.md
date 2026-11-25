@@ -29,14 +29,14 @@ Les droits sont appliqués par les **règles d'accès de Grist**, pas par le wid
 | Propriétaires du document | Tout | Tout |
 | Gestionnaires de l'annuaire | Toutes les fiches, sauf celles des autres gestionnaires | Tout |
 | Éditeurs | Consultent, créent des fiches, modifient la leur et celles qu'ils ont créées | Consultent |
-| Lecteurs | Consultent | Consultent |
-| Sans accès au document | Rien | Rien |
+| Lecteurs connectés | Consultent | Consultent |
+| Sans accès au document, ou visiteur anonyme d'un document public | Rien | Consultent les structures si le document est public |
 
 Le rôle **gestionnaire de l'annuaire** (case `Gestion_annuaire` d'une fiche) n'est attribué que par les propriétaires. Il repose sur un attribut utilisateur de Grist (`Profil_annuaire`) qui relie la personne connectée à sa fiche par le courriel.
 
 Si les tables ont déjà des règles posées par un autre outil (par exemple grist-projet), elles sont gardées : l'annuaire y ajoute seulement les règles du rôle gestionnaire, juste avant la première règle qui accorde un droit.
 
-**Pas de page publique.** L'annuaire contient des données personnelles : il s'utilise dans Grist, par les personnes invitées dans le document. Pour montrer des structures au public, utilisez [grist-carte](https://github.com/lab17bis/grist-carte) sur la table `Structures`.
+**Pas de page publique.** Même si le document est rendu public, les règles de l'annuaire empêchent un visiteur anonyme de lire la table `Personnes`. L'annuaire contient des données personnelles : il s'utilise dans Grist, par les personnes invitées dans le document. Pour montrer des structures au public, utilisez [grist-carte](https://github.com/lab17bis/grist-carte) sur la table `Structures`.
 
 ## Le brancher en 3 minutes
 

@@ -1209,7 +1209,7 @@
         [GEST, '+CRUD', 'Gestionnaires de l’annuaire : toutes les fiches', true],
         ['user.Access in [EDITOR] and (rec.Cree_par == user.Email.lower() or (rec.Email and rec.Email.lower() == user.Email.lower()))', '+RU', 'Éditeurs : leur fiche et celles qu’ils ont créées'],
         ['user.Access in [EDITOR]', '+RC', 'Éditeurs : consultent et créent des fiches'],
-        ['user.Access in [VIEWER]', '+R', 'Lecteurs : consultent'],
+        ['user.Access in [VIEWER] and user.Email != "anon@getgrist.com"', '+R', 'Lecteurs connectés : consultent (jamais un visiteur anonyme, même si le document est public)'],
         ['True', '-CRUDS', 'Par défaut : rien']],
       Structures: [
         ['user.Access in [OWNER]', '+CRUDS', 'Propriétaires : tout'],
@@ -1247,7 +1247,7 @@
     var libT = function (t) { return t === 'Comptes' && e[t] === 'autres' ? 'règles d\'un autre outil, gardées' : lib[e[t]]; };
     var aFaire = !e.attribut || ['Personnes', 'Structures', 'Comptes'].some(function (t) { return e[t] !== 'annuaire' && !(t === 'Comptes' && e[t] === 'autres'); });
     return '<ul class="fr-text--sm">' + ['Personnes', 'Structures', 'Comptes'].map(function (t) { return '<li><code>' + t + '</code> : ' + libT(t) + '</li>'; }).join('') + '</ul>' +
-      '<p class="fr-text--sm">Les règles de l\'annuaire : propriétaires et gestionnaires de l\'annuaire gèrent tout ; les éditeurs consultent, créent des fiches et modifient la leur et celles qu\'ils ont créées ; les lecteurs consultent ; une personne sans accès au document ne voit rien. ' +
+      '<p class="fr-text--sm">Les règles de l\'annuaire : propriétaires et gestionnaires de l\'annuaire gèrent tout ; les éditeurs consultent, créent des fiches et modifient la leur et celles qu\'ils ont créées ; les lecteurs connectés consultent ; une personne sans accès au document, ou un visiteur anonyme d\'un document public, ne voit aucune personne. ' +
       'Des règles déjà posées par un autre outil sont gardées : l\'annuaire y ajoute seulement le rôle gestionnaire.</p>' +
       (aFaire ? '<button type="button" class="fr-btn fr-btn--sm" data-action="installer-regles">' + (['Personnes', 'Structures'].every(function (t) { return e[t] === 'aucune'; }) ? 'Installer les règles d\'accès' : 'Compléter les règles d\'accès') + '</button>' : '<p class="fr-badge fr-badge--success fr-badge--sm">Règles en place</p>');
   }

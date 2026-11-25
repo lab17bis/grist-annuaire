@@ -399,8 +399,8 @@
     var m = colonnesManquantes();
     if (!m.length) return '';
     return '<div class="fr-notice fr-notice--info fr-mb-2w"><div class="fr-notice__body"><p class="fr-notice__title">Le document peut être complété pour l\'annuaire : ' + esc(m.join(', ')) + '. ' +
-      'Rien n\'est renommé ni supprimé. </p><button type="button" class="fr-btn fr-btn--sm fr-mt-1w" data-action="mettre-a-jour">Mettre le document à jour</button>' +
-      '<p class="fr-text--xs fr-mt-1w fr-mb-0">À faire une fois, par un propriétaire du document.</p></div></div>';
+      'Rien n\'est renommé ni supprimé. À faire une fois, par un propriétaire du document.</p></div></div>' +
+      '<button type="button" class="fr-btn fr-btn--sm fr-mb-3w" data-action="mettre-a-jour">Mettre le document à jour</button>';
   }
   function blocMention() { return R.mention ? '<p class="an-mention">' + esc(R.mention) + '</p>' : ''; }
 
@@ -555,7 +555,7 @@
     if (cible) h += '<div class="fr-notice fr-notice--info fr-mb-2w"><div class="fr-notice__body"><p class="fr-notice__title">Fiche fusionnée dans <a href="#/personne/' + cible.id + '">' + esc(cible.Nom) + '</a>.</p></div></div>';
     h += '<div class="an-fiche"><div><dl class="an-infos">' + infos.map(function (i) { return '<dt>' + esc(i[0]) + '</dt><dd>' + (i[1] || '–') + '</dd>'; }).join('') + '</dl>' +
       '<ul class="fr-btns-group fr-btns-group--inline-sm fr-btns-group--sm fr-mt-3w">' +
-      '<li><a class="fr-btn fr-icon-edit-line fr-btn--icon-left" href="#/personne/' + p.id + '/modifier">Modifier</a></li>' +
+      '<li><a class="fr-btn" href="#/personne/' + p.id + '/modifier">Modifier</a></li>' +
       '<li><button type="button" class="fr-btn fr-btn--secondary" data-archiver="' + p.id + '">' + (archivee(p) ? 'Réactiver' : 'Archiver') + '</button></li>' +
       '<li><button type="button" class="fr-btn fr-btn--secondary" data-fusionner-avec="' + p.id + '" aria-expanded="' + (etat.fusionAvec === p.id) + '">Fusionner avec…</button></li>' +
       '<li><button type="button" class="fr-btn fr-btn--tertiary" data-exporter="' + p.id + '">Exporter ses données</button></li>' +
@@ -744,7 +744,7 @@
       '<h2 class="fr-h5 fr-mt-3w">Personnes (' + m.length + (mt > m.length ? ', ' + mt + ' avec les services' : '') + ')</h2>' +
       (m.length ? '<ul class="an-liste-simple">' + m.map(function (p) { return '<li><a href="#/personne/' + p.id + '">' + esc(p.Nom) + '</a>' + (p.Fonction ? ' · ' + esc(p.Fonction) : '') + '</li>'; }).join('') + '</ul>' : '<p>Aucune personne rattachée directement.</p>') +
       '<ul class="fr-btns-group fr-btns-group--inline-sm fr-btns-group--sm fr-mt-3w">' +
-      '<li><a class="fr-btn fr-icon-edit-line fr-btn--icon-left" href="#/structure/' + id + '/modifier">Modifier</a></li>' +
+      '<li><a class="fr-btn" href="#/structure/' + id + '/modifier">Modifier</a></li>' +
       '<li><a class="fr-btn fr-btn--secondary" href="#/nouvelle-personne/' + id + '">Ajouter une personne</a></li>' +
       (aCol('Structures', 'Parent') ? '<li><a class="fr-btn fr-btn--secondary" href="#/nouvelle-structure/' + id + '">Ajouter un service</a></li>' : '') +
       '<li><button type="button" class="fr-btn fr-btn--tertiary" data-supprimer="Structures:' + id + '">Supprimer</button></li></ul>' +
@@ -846,7 +846,7 @@
     var comp = Object.keys(pl.completer);
     h += '<li>' + (comp.length ? 'La fiche gardée est complétée : ' + esc(comp.map(function (c) { return c === 'Email' || c === 'Email_saisi' ? 'courriel' : c.toLowerCase(); }).join(', ')) + '.' : 'La fiche gardée n\'est pas modifiée.') + '</li>';
     Object.keys(pl.groupes).forEach(function (k) { var x = pl.groupes[k]; h += '<li>' + esc(NOMS_TABLES[x.table] || x.table) + ' (' + esc(x.col) + ') : ' + x.ids.length + ' mention' + (x.ids.length > 1 ? 's' : '') + ' reportée' + (x.ids.length > 1 ? 's' : '') + ' sur la fiche gardée.</li>'; });
-    h += '<li>La fiche « ' + esc(a.Nom) + ' » est archivée, son courriel retiré, et elle renvoie vers la fiche gardée. Elle n\'est pas supprimée.</li>';
+    h += '<li>La fiche « ' + esc(a.Nom) + ' » est archivée' + (emailDe(a) ? ', son courriel retiré' : '') + ' et elle renvoie vers la fiche gardée. Elle n\'est pas supprimée.</li>';
     if (pl.mentions.length) h += '<li>' + pl.mentions.length + ' mention' + (pl.mentions.length > 1 ? 's' : '') + ' du nom écrite' + (pl.mentions.length > 1 ? 's' : '') + ' en texte (' + esc(pl.mentions.map(function (m) { return NOMS_TABLES[m.table] || m.table; }).filter(function (x, i, t) { return t.indexOf(x) === i; }).join(', ')) + ') : vous pourrez les remplacer une à une depuis la fiche archivée.</li>';
     h += '</ul><p class="fr-text--sm">Si la fusion touche d\'autres tables que l\'annuaire (projets, groupes…), seul un propriétaire du document peut la faire.</p>' +
       '<ul class="fr-btns-group fr-btns-group--inline-md"><li><button type="button" class="fr-btn" data-fusionner="' + gid + ':' + aid + '">Fusionner</button></li>' +
@@ -1209,7 +1209,7 @@
         [GEST, '+CRUD', 'Gestionnaires de l’annuaire : toutes les fiches', true],
         ['user.Access in [EDITOR] and (rec.Cree_par == user.Email.lower() or (rec.Email and rec.Email.lower() == user.Email.lower()))', '+RU', 'Éditeurs : leur fiche et celles qu’ils ont créées'],
         ['user.Access in [EDITOR]', '+RC', 'Éditeurs : consultent et créent des fiches'],
-        ['user.Access in [VIEWER]', '+R', 'Lecteurs : consultent'],
+        ['user.Access in [VIEWER] and user.Email != "anon@getgrist.com"', '+R', 'Lecteurs connectés : consultent (jamais un visiteur anonyme, même si le document est public)'],
         ['True', '-CRUDS', 'Par défaut : rien']],
       Structures: [
         ['user.Access in [OWNER]', '+CRUDS', 'Propriétaires : tout'],
@@ -1244,9 +1244,10 @@
     if (e.demo) return '<p class="fr-text--sm">Dans Grist, cette rubrique montre l\'état des règles d\'accès de Personnes, Structures et Comptes et propose de les installer.</p>';
     if (e.illisible) return '<p class="fr-text--sm">Seuls les propriétaires du document voient les règles d\'accès.</p>';
     var lib = { aucune: 'aucune règle', annuaire: 'règles de l\'annuaire en place', autres: 'règles d\'un autre outil (par exemple grist-projet), sans le rôle gestionnaire' };
+    var libT = function (t) { return t === 'Comptes' && e[t] === 'autres' ? 'règles d\'un autre outil, gardées' : lib[e[t]]; };
     var aFaire = !e.attribut || ['Personnes', 'Structures', 'Comptes'].some(function (t) { return e[t] !== 'annuaire' && !(t === 'Comptes' && e[t] === 'autres'); });
-    return '<ul class="fr-text--sm">' + ['Personnes', 'Structures', 'Comptes'].map(function (t) { return '<li><code>' + t + '</code> : ' + lib[e[t]] + '</li>'; }).join('') + '</ul>' +
-      '<p class="fr-text--sm">Les règles de l\'annuaire : propriétaires et gestionnaires de l\'annuaire gèrent tout ; les éditeurs consultent, créent des fiches et modifient la leur et celles qu\'ils ont créées ; les lecteurs consultent ; une personne sans accès au document ne voit rien. ' +
+    return '<ul class="fr-text--sm">' + ['Personnes', 'Structures', 'Comptes'].map(function (t) { return '<li><code>' + t + '</code> : ' + libT(t) + '</li>'; }).join('') + '</ul>' +
+      '<p class="fr-text--sm">Les règles de l\'annuaire : propriétaires et gestionnaires de l\'annuaire gèrent tout ; les éditeurs consultent, créent des fiches et modifient la leur et celles qu\'ils ont créées ; les lecteurs connectés consultent ; une personne sans accès au document, ou un visiteur anonyme d\'un document public, ne voit aucune personne. ' +
       'Des règles déjà posées par un autre outil sont gardées : l\'annuaire y ajoute seulement le rôle gestionnaire.</p>' +
       (aFaire ? '<button type="button" class="fr-btn fr-btn--sm" data-action="installer-regles">' + (['Personnes', 'Structures'].every(function (t) { return e[t] === 'aucune'; }) ? 'Installer les règles d\'accès' : 'Compléter les règles d\'accès') + '</button>' : '<p class="fr-badge fr-badge--success fr-badge--sm">Règles en place</p>');
   }
@@ -1291,17 +1292,24 @@
         });
       });
       if (!plan.length) return null;
-      var creer = ajoutsRes.length ? grist.docApi.applyUserActions(ajoutsRes.map(function (k) { var p = k.split('|'); return ['AddRecord', '_grist_ACLResources', null, { tableId: p[0], colIds: p[1] }]; })) : Promise.resolve({ retValues: [] });
-      return creer.then(function (r) {
-        var carte = {}; ajoutsRes.forEach(function (k, i) { carte[k] = r.retValues[i]; });
-        return grist.docApi.applyUserActions([['BulkAddRecord', '_grist_ACLRules', plan.map(function () { return null; }), {
-          resource: plan.map(function (p) { return typeof p.res === 'string' ? carte[p.res] : p.res; }),
-          aclFormula: plan.map(function (p) { return p.formule; }), permissionsText: plan.map(function (p) { return p.droits; }),
-          rulePos: plan.map(function (p) { return p.pos; }), memo: plan.map(function (p) { return p.memo; }), userAttributes: plan.map(function (p) { return p.attr || ''; })
-        }]]);
+      // Une seule action : Grist recharge le document (et le widget) dès que les règles changent.
+      // Les ressources nouvelles sont désignées par des numéros négatifs, résolus dans la même action.
+      var neg = {}; ajoutsRes.forEach(function (k, i) { neg[k] = -(i + 1); });
+      var actions = [];
+      if (ajoutsRes.length) actions.push(['BulkAddRecord', '_grist_ACLResources', ajoutsRes.map(function (k) { return neg[k]; }), {
+        tableId: ajoutsRes.map(function (k) { return k.split('|')[0]; }), colIds: ajoutsRes.map(function (k) { return k.split('|')[1]; }) }]);
+      actions.push(['BulkAddRecord', '_grist_ACLRules', plan.map(function () { return null; }), {
+        resource: plan.map(function (p) { return typeof p.res === 'string' ? neg[p.res] : p.res; }),
+        aclFormula: plan.map(function (p) { return p.formule; }), permissionsText: plan.map(function (p) { return p.droits; }),
+        rulePos: plan.map(function (p) { return p.pos; }), memo: plan.map(function (p) { return p.memo; }), userAttributes: plan.map(function (p) { return p.attr || ''; })
+      }]);
+      try { sessionStorage.setItem('an-regles', '1'); } catch (er) { /* stockage indisponible */ }
+      return grist.docApi.applyUserActions(actions).then(function () {
+        try { sessionStorage.removeItem('an-regles'); } catch (er) { /* stockage indisponible */ }
       }).catch(function (err) {
         // Le rechargement du document après un changement de règles coupe la connexion : ce n'est pas un échec.
         if (/disposed|closed|disconnect/i.test(String((err && err.message) || err))) return null;
+        try { sessionStorage.removeItem('an-regles'); } catch (er) { /* stockage indisponible */ }
         throw err;
       });
     }).then(function () {
@@ -1565,6 +1573,9 @@
   // Démonstration : accès aux données pour les tests.
   window.anEtat = function () { return { personnes: data.Personnes.length, structures: data.Structures.length, doublons: doublons().length, autres: autres, reglages: reglages }; };
 
+  try {
+    if (sessionStorage.getItem('an-regles')) { sessionStorage.removeItem('an-regles'); etat.alerte = { type: 'success', texte: 'Règles d\'accès installées. Vous pouvez les voir dans Grist : menu Règles d\'accès.' }; etat.garderAlerte = true; }
+  } catch (e) { /* stockage indisponible */ }
   if (DEMO) {
     document.getElementById('an-demo').hidden = false;
     charger().then(rendre).catch(erreurChargement);
