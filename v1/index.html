@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr" data-fr-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' https://docs.getgrist.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; font-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https: http://localhost:* http://127.0.0.1:*; frame-src 'self' https:; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Annuaire</title>
+  <link rel="stylesheet" href="vendor/dsfr/dsfr.min.css">
+  <link rel="stylesheet" href="vendor/dsfr/utility/icons/icons.min.css">
+  <link rel="stylesheet" href="commun/page.css?v=1">
+  <link rel="stylesheet" href="commun/configuration.css?v=3">
+  <link rel="stylesheet" href="css/app.css?v=1">
+  <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
+</head>
+<body>
+  <a class="fr-link an-evitement" href="#an-app">Aller au contenu</a>
+  <div id="entete"></div>
+
+  <div id="an-demo" class="fr-notice fr-notice--info an-ecran" hidden>
+    <div class="an-marge">
+      <div class="fr-notice__body">
+        <p class="fr-notice__title">Mode démonstration : données fictives, rien n'est enregistré.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="an-coque" class="an-marge"></div>
+  <main id="an-app" class="an-marge" tabindex="-1">
+    <p>Chargement…</p>
+  </main>
+
+  <div id="pied"></div>
+  <div class="an-pied an-marge an-ecran">
+    <div class="an-pied__liens">
+      <a class="fr-link fr-text--sm" href="#/reglages">Réglages</a>
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-icon-refresh-line fr-btn--icon-left" id="an-actualiser">Actualiser</button>
+    </div>
+    <div class="an-pied__theme">
+      <label class="fr-label" for="an-theme">Thème</label>
+      <select class="fr-select fr-select--sm" id="an-theme">
+        <option value="auto">Automatique</option>
+        <option value="light">Clair</option>
+        <option value="dark">Sombre</option>
+      </select>
+    </div>
+  </div>
+
+  <script src="commun/page-dsfr.js?v=2"></script>
+  <script src="commun/page-editeur.js?v=1"></script>
+  <script src="commun/configuration.js?v=8"></script>
+  <script src="js/app.js?v=1"></script>
+</body>
+</html>
