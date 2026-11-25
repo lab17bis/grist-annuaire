@@ -555,7 +555,7 @@
     if (cible) h += '<div class="fr-notice fr-notice--info fr-mb-2w"><div class="fr-notice__body"><p class="fr-notice__title">Fiche fusionnée dans <a href="#/personne/' + cible.id + '">' + esc(cible.Nom) + '</a>.</p></div></div>';
     h += '<div class="an-fiche"><div><dl class="an-infos">' + infos.map(function (i) { return '<dt>' + esc(i[0]) + '</dt><dd>' + (i[1] || '–') + '</dd>'; }).join('') + '</dl>' +
       '<ul class="fr-btns-group fr-btns-group--inline-sm fr-btns-group--sm fr-mt-3w">' +
-      '<li><a class="fr-btn fr-icon-edit-line fr-btn--icon-left" href="#/personne/' + p.id + '/modifier">Modifier</a></li>' +
+      '<li><a class="fr-btn" href="#/personne/' + p.id + '/modifier">Modifier</a></li>' +
       '<li><button type="button" class="fr-btn fr-btn--secondary" data-archiver="' + p.id + '">' + (archivee(p) ? 'Réactiver' : 'Archiver') + '</button></li>' +
       '<li><button type="button" class="fr-btn fr-btn--secondary" data-fusionner-avec="' + p.id + '" aria-expanded="' + (etat.fusionAvec === p.id) + '">Fusionner avec…</button></li>' +
       '<li><button type="button" class="fr-btn fr-btn--tertiary" data-exporter="' + p.id + '">Exporter ses données</button></li>' +
@@ -744,7 +744,7 @@
       '<h2 class="fr-h5 fr-mt-3w">Personnes (' + m.length + (mt > m.length ? ', ' + mt + ' avec les services' : '') + ')</h2>' +
       (m.length ? '<ul class="an-liste-simple">' + m.map(function (p) { return '<li><a href="#/personne/' + p.id + '">' + esc(p.Nom) + '</a>' + (p.Fonction ? ' · ' + esc(p.Fonction) : '') + '</li>'; }).join('') + '</ul>' : '<p>Aucune personne rattachée directement.</p>') +
       '<ul class="fr-btns-group fr-btns-group--inline-sm fr-btns-group--sm fr-mt-3w">' +
-      '<li><a class="fr-btn fr-icon-edit-line fr-btn--icon-left" href="#/structure/' + id + '/modifier">Modifier</a></li>' +
+      '<li><a class="fr-btn" href="#/structure/' + id + '/modifier">Modifier</a></li>' +
       '<li><a class="fr-btn fr-btn--secondary" href="#/nouvelle-personne/' + id + '">Ajouter une personne</a></li>' +
       (aCol('Structures', 'Parent') ? '<li><a class="fr-btn fr-btn--secondary" href="#/nouvelle-structure/' + id + '">Ajouter un service</a></li>' : '') +
       '<li><button type="button" class="fr-btn fr-btn--tertiary" data-supprimer="Structures:' + id + '">Supprimer</button></li></ul>' +
@@ -846,7 +846,7 @@
     var comp = Object.keys(pl.completer);
     h += '<li>' + (comp.length ? 'La fiche gardée est complétée : ' + esc(comp.map(function (c) { return c === 'Email' || c === 'Email_saisi' ? 'courriel' : c.toLowerCase(); }).join(', ')) + '.' : 'La fiche gardée n\'est pas modifiée.') + '</li>';
     Object.keys(pl.groupes).forEach(function (k) { var x = pl.groupes[k]; h += '<li>' + esc(NOMS_TABLES[x.table] || x.table) + ' (' + esc(x.col) + ') : ' + x.ids.length + ' mention' + (x.ids.length > 1 ? 's' : '') + ' reportée' + (x.ids.length > 1 ? 's' : '') + ' sur la fiche gardée.</li>'; });
-    h += '<li>La fiche « ' + esc(a.Nom) + ' » est archivée, son courriel retiré, et elle renvoie vers la fiche gardée. Elle n\'est pas supprimée.</li>';
+    h += '<li>La fiche « ' + esc(a.Nom) + ' » est archivée' + (emailDe(a) ? ', son courriel retiré' : '') + ' et elle renvoie vers la fiche gardée. Elle n\'est pas supprimée.</li>';
     if (pl.mentions.length) h += '<li>' + pl.mentions.length + ' mention' + (pl.mentions.length > 1 ? 's' : '') + ' du nom écrite' + (pl.mentions.length > 1 ? 's' : '') + ' en texte (' + esc(pl.mentions.map(function (m) { return NOMS_TABLES[m.table] || m.table; }).filter(function (x, i, t) { return t.indexOf(x) === i; }).join(', ')) + ') : vous pourrez les remplacer une à une depuis la fiche archivée.</li>';
     h += '</ul><p class="fr-text--sm">Si la fusion touche d\'autres tables que l\'annuaire (projets, groupes…), seul un propriétaire du document peut la faire.</p>' +
       '<ul class="fr-btns-group fr-btns-group--inline-md"><li><button type="button" class="fr-btn" data-fusionner="' + gid + ':' + aid + '">Fusionner</button></li>' +
