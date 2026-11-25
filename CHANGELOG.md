@@ -13,4 +13,5 @@ Les adresses `/v1/` ne changent pas : chaque version ajoute ou corrige, sans ret
 - Import d'un fichier CSV avec correspondance des colonnes et aperçu avant écriture.
 - Protection des données : mention d'information, délai de conservation après archivage (12 mois par défaut), « Apparaît dans », export des données d'une personne, suppression qui vide les références.
 - Rôle « gestionnaire de l'annuaire » et règles d'accès Grist installées par le widget ; règles existantes d'autres outils gardées et complétées.
+- Mention discrète en pied de page : « Widget conçu par le Lab 17 bis, le laboratoire d'innovation publique de l'académie de Reims ».
 - Reprise des tables `Personnes` et `Structures` existantes (variantes de grist-projet et de l'espace communauté) : seules les colonnes manquantes sont ajoutées.

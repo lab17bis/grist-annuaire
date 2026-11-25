@@ -1210,18 +1210,18 @@
         ['user.Access in [EDITOR] and (rec.Cree_par == user.Email.lower() or (rec.Email and rec.Email.lower() == user.Email.lower()))', '+RU', 'Éditeurs : leur fiche et celles qu’ils ont créées'],
         ['user.Access in [EDITOR]', '+RC', 'Éditeurs : consultent et créent des fiches'],
         ['user.Access in [VIEWER] and user.Email != "anon@getgrist.com"', '+R', 'Lecteurs connectés : consultent (jamais un visiteur anonyme, même si le document est public)'],
-        ['True', '-CRUDS', 'Par défaut : rien']],
+        ['True', '-CRUDS', 'Vos droits sur ce document ne permettent pas cette action.']],
       Structures: [
         ['user.Access in [OWNER]', '+CRUDS', 'Propriétaires : tout'],
         [GEST, '+CRUD', 'Gestionnaires de l’annuaire : les structures', true],
         ['user.Access in [EDITOR, VIEWER]', '+R', 'Consultation'],
-        ['True', '-CRUDS', 'Par défaut : rien']],
+        ['True', '-CRUDS', 'Vos droits sur ce document ne permettent pas cette action.']],
       Comptes: [
         ['rec.Email and rec.Email != user.Email.lower()', '-RU', 'Chacun ne voit que sa ligne'],
         ['user.Access in [EDITOR] and newRec.Email and newRec.Email != user.Email.lower()', '-CU', 'Pas de compte au nom d’un autre'],
         ['user.Access in [OWNER]', '+CRUD', 'Propriétaires : nettoient les comptes'],
         ['user.Access in [EDITOR]', '+CRU', 'Éditeurs : créent leur ligne'],
-        ['True', '-CRUD', 'Par défaut : rien']]
+        ['True', '-CRUD', 'Vos droits sur ce document ne permettent pas cette action.']]
     };
   }
   var etatRegles = null;   // { attribut, Personnes: 'aucune'|'annuaire'|'autres'|'completes', … }
