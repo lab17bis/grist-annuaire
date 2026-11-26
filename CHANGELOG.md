@@ -2,6 +2,11 @@
 
 Les adresses `/v1/` ne changent pas : chaque version ajoute ou corrige, sans retirer ce qui existe.
 
+## 2026-11-26 (tables déjà présentes dans le document)
+
+### Ajouté
+- Le bandeau « Le document peut être complété » conseille de renommer d'abord une colonne existante qui porte la même information sous un autre nom (par exemple `Mail` au lieu de `Email`) : ses données sont alors reprises au lieu d'être ignorées.
+
 ## 2026-11-26 (style commun de configuration)
 
 ### Corrigé

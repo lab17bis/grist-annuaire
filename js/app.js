@@ -399,7 +399,8 @@
     var m = colonnesManquantes();
     if (!m.length) return '';
     return '<div class="fr-notice fr-notice--info fr-mb-2w"><div class="fr-notice__body"><p class="fr-notice__title">Le document peut être complété pour l\'annuaire : ' + esc(m.join(', ')) + '. ' +
-      'Rien n\'est renommé ni supprimé. À faire une fois, par un propriétaire du document.</p></div></div>' +
+      'Rien n\'est renommé ni supprimé. À faire une fois, par un propriétaire du document.</p>' +
+      '<p class="fr-text--sm">Si l\'une de vos colonnes contient déjà cette information sous un autre nom (par exemple <code>Mail</code> au lieu de <code>Email</code>), renommez-la d\'abord dans Grist avec le nom attendu : ses données seront reprises.</p></div></div>' +
       '<button type="button" class="fr-btn fr-btn--sm fr-mb-3w" data-action="mettre-a-jour">Mettre le document à jour</button>';
   }
   function blocMention() { return R.mention ? '<p class="an-mention">' + esc(R.mention) + '</p>' : ''; }
